@@ -35,5 +35,5 @@ It is already cleaned and ready for analysis.
 
 #Note:
 
-First run the poke-script.R file to get the cleaned new datasheet pokemon_df_cap 
+First run the poke-script.R file to get the cleaned new pokemon_df_cap datasheet 
 and then render gotta-catch-them-all.qmd.
