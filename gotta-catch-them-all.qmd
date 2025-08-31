@@ -77,6 +77,8 @@ tbl_des
 
 The **Kruskal-Wallis test** is used to assess whether the differences in distributions across types are statistically significant.
 
+The Kruskal-Wallis test for Attack Points across types yielded a p-value of `r gtsummary::inline_text(tbl_des, variable = "attack", column = "p.value")`, suggesting `r ifelse(gtsummary::inline_text(tbl_des, variable = "attack", column = "p.value") < 0.05, "a statistically significant", "no statistically significant")` difference across primary types.
+
 ## Regression Analysis
 
 To examine how **hit points (HP)**, **attack**, and **defense** predict **base experience**, I have fitted a simple linear regression model.
