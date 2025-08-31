@@ -49,6 +49,7 @@ write_rds(pokemon_df_cap, here("data", "pokemon_df_cap.rds"))
 ```{r}
 #| label: tbl-des
 #| tbl-cap: "Descriptive statistics by primary type"
+
 #Creating a {gtsummary} table of descriptive statistics
 library(gtsummary)
 tbl_summary(pokemon_df_cap,
@@ -94,6 +95,7 @@ summary(linear_model)
 ```{r}
 #| label: tbl-reg
 #| tbl-cap: "Linear Regression Summary"
+
 #Creating a formatted regression table
 tbl_lm <- tbl_uvregression(
 	pokemon_df_cap,
@@ -108,4 +110,29 @@ tbl_lm <- tbl_uvregression(
 	bold_labels()
 
 tbl_lm
+```
+
+## Data Visualization
+
+@fig-hpvsbase depicts a scatter plot to visualize the relationship between HP and base experience, colored by Pokémon primary type.
+
+```{r}
+#| label: fig-hpvsbase
+#| fig-cap: "HP vs Base Experience by Pokémon Type"
+
+#Creating a figure using {ggplot2}
+library(ggplot2)
+ggplot(pokemon_df_cap, aes(x = hp, y = base_experience, color = type_1_cap)) +
+	geom_point() +
+	labs(
+		title = "HP vs Base Experience by Pokémon Type",
+		x = "HP (Hit Points)",
+		y = "Base Experience",
+		color = "Primary Type"
+	) +
+	theme_minimal() +
+	theme(
+		plot.title = element_text(face = "bold", hjust = 0.5),
+		legend.position = "bottom"
+	)
 ```
