@@ -71,3 +71,5 @@ tbl_summary(pokemon_df_cap,
 	add_p(test = all_continuous() ~ "kruskal.test") |>
 	bold_labels()
 ```
+
+The **Kruskal-Wallis test** is used to assess whether the differences in distributions across types are statistically significant.
