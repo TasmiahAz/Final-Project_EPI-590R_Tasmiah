@@ -2,7 +2,72 @@
 title: "gotta-catch-them-all"
 author: "Tasmiah Tahera Aziz"
 format: html
+execute: 
+  echo: false
+  warning: false
 editor: visual
 ---
 
 ## GOTTA CATCH THEM ALL
+
+## Introduction
+
+Pokémon are fascinating creatures. While every Pokémon is unique, many share similarities in their statistics and characteristics, often aligned with their primary type. In this document, I explored and compared Pokémon stats using summary tables, regression analysis, and visualizations. I utilized the `gtsummary` and `ggplot2` libraries in R to perform this analysis, along with a custom function to calculate the median.
+
+```{r}
+
+#Reading in and saving the pokemon dataset using {here} and {readr} package
+library(here)
+library(readr)
+
+pokemon_df <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/main/data/2025/2025-04-01/pokemon_df.csv')
+
+write_rds(pokemon_df, here("data", "pokemon_df.rds"))
+
+#Adding Capitalized Text Columns
+library(stringr)
+library(dplyr)
+pokemon_df_cap <- mutate(
+	pokemon_df,
+	pokemon_cap = str_to_title(pokemon),
+	type_1_cap = str_to_title(type_1),
+	type_2_cap = str_to_title(type_2),
+	egg_group_1_cap = str_to_title(egg_group_1),
+	egg_group_2_cap = str_to_title(egg_group_2)
+)
+
+#saving the new pokemon dataset named pokemon_df_cap
+write_rds(pokemon_df_cap, here("data", "pokemon_df_cap.rds"))
+
+
+```
+
+## Descriptive Statistics by Pokémon Type
+
+@tbl-des summarizes key attributes such as height, weight, base experience, and combat stats, grouped by the primary type.
+
+```{r}
+#| label: tbl-des
+#| tbl-cap: "Descriptive statistics by primary type"
+#Creating a {gtsummary} table of descriptive statistics
+library(gtsummary)
+tbl_summary(pokemon_df_cap,
+						by = type_1_cap,
+						include = c(height, weight, base_experience, hp,
+												attack, defense, special_attack, special_defense,
+												speed),
+						label = list(
+							height ~ "Height",
+							weight ~ "Weight",
+							base_experience ~ "Base Experience",
+							hp ~ "Hit Points",
+							attack ~ "Attack Points",
+							defense ~ "Defence Points",
+							special_attack ~ "Special Attack Points",
+							special_defense ~ "Special Defence Points",
+							speed ~ "Speed"
+						),
+						missing_text = "Missing") |>
+	add_p(test = all_continuous() ~ "kruskal.test") |>
+	bold_labels()
+```
