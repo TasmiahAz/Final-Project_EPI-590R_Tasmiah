@@ -136,3 +136,31 @@ ggplot(pokemon_df_cap, aes(x = hp, y = base_experience, color = type_1_cap)) +
 		legend.position = "bottom"
 	)
 ```
+
+This plot provides a clear visual of how HP correlates with base experience across different types.
+
+## Custom Function: Median Calculation
+
+Below is the implementation of a custom function to calculate the median of a numeric vector without using the built-in `median()` function.
+
+```{r}
+#| echo: TRUE
+#Writing a function for median
+
+new_median <- function(x) {
+	# Removing NA values
+	x <- x[!is.na(x)]
+	# Sorting the data
+	x <- sort(x)
+	n <- length(x)
+	# If even number of values
+	if (n %% 2 == 0) {
+		median_val <- (x[n/2] + x[n/2 + 1]) / 2
+	} else {
+		# If odd number of values
+		median_val <- x[(n + 1) / 2]
+	}
+	return(median_val)
+}
+
+```
