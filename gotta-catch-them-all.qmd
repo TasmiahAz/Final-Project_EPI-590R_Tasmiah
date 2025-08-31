@@ -44,7 +44,7 @@ write_rds(pokemon_df_cap, here("data", "pokemon_df_cap.rds"))
 
 ## Descriptive Statistics by Pokémon Type
 
-@tbl-des summarizes key attributes such as height, weight, base experience, and combat stats, grouped by the primary type.
+@tbl-des summarizes key attributes such as height, weight, base experience, and combat stats, grouped by the primary type. There are `r length(unique(pokemon_df_cap$type_1_cap))` different primary Pokémon types represented in the dataset.
 
 ```{r}
 #| label: tbl-des
@@ -52,7 +52,7 @@ write_rds(pokemon_df_cap, here("data", "pokemon_df_cap.rds"))
 
 #Creating a {gtsummary} table of descriptive statistics
 library(gtsummary)
-tbl_summary(pokemon_df_cap,
+tbl_des <- tbl_summary(pokemon_df_cap,
 						by = type_1_cap,
 						include = c(height, weight, base_experience, hp,
 												attack, defense, special_attack, special_defense,
@@ -71,6 +71,8 @@ tbl_summary(pokemon_df_cap,
 						missing_text = "Missing") |>
 	add_p(test = all_continuous() ~ "kruskal.test") |>
 	bold_labels()
+
+tbl_des
 ```
 
 The **Kruskal-Wallis test** is used to assess whether the differences in distributions across types are statistically significant.
@@ -164,3 +166,14 @@ new_median <- function(x) {
 }
 
 ```
+
+## Utilizing the Custom Function
+
+To demonstrate the utility of the custom function `new_median()`, I applied it to the `speed` column from the Pokémon dataset.
+
+```{r}
+#Applying the custom median function to the 'speed' column
+new_median(pokemon_df_cap$speed)
+```
+
+So, the median Pokémon speed is `r new_median(pokemon_df_cap$speed)`.
