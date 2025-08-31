@@ -86,3 +86,26 @@ linear_model <- lm(base_experience ~ hp + attack + defense, data = pokemon_df_ca
 # Summary of the model
 summary(linear_model)
 ```
+
+### Regression Table
+
+@tbl-reg provides estimates of the effect of each variable on base experience, helping us understand which characteristics are more influential. It summarizes the linear regression model predicting Pokémon base experience based on HP, Attack, and Defense.
+
+```{r}
+#| label: tbl-reg
+#| tbl-cap: "Linear Regression Summary"
+#Creating a formatted regression table
+tbl_lm <- tbl_uvregression(
+	pokemon_df_cap,
+	y = base_experience,
+	include = c(hp, attack, defense),
+	method = lm,
+	label = list(
+		hp = "HP",
+		attack = "Attack",
+		defense = "Defense")
+) |>
+	bold_labels()
+
+tbl_lm
+```
